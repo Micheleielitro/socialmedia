@@ -3,6 +3,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AuthenticatorComponent } from './tools/authenticator/authenticator.component';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { Router } from '@angular/router';
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 
 
 @Component({
@@ -13,6 +14,9 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'socialmedia';
   auth = new FirebaseTSAuth();
+  firestore = new FirebaseTSFirestore();
+  userHasProfile = true;
+  userDocument!: UserDocument;
 
   constructor(private loginSheet: MatBottomSheet, private router: Router) {
     this.auth.listenToSignInStateChanges(
@@ -33,6 +37,7 @@ export class AppComponent {
 
           },
           whenSignedInAndEmailVerified: user => {
+            this.getUserProfile();
 
           },
           whenChanged: user => {
@@ -45,6 +50,27 @@ export class AppComponent {
     )
 
   }
+
+  getUserProfile() {
+    this.firestore.listenToDocument(
+      {
+        name: "Getting Document",
+        path: ["user", this.auth.getAuth().currentUser!.uid],
+        onUpdate: (result) => {
+          this.userDocument = <UserDocument>result.data();
+          this.userHasProfile = result.exists;
+        }
+      }
+
+
+
+    );
+
+  }
+
+
+
+
   onLogoutClick() {
     this.auth.signOut()
   }
@@ -58,4 +84,9 @@ export class AppComponent {
   onLoginClick() {
     this.loginSheet.open(AuthenticatorComponent)
   }
+}
+export interface UserDocument {
+  publicName: string;
+  description: string
+
 }
