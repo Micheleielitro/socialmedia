@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FirebaseTSAuth } from "firebasets/firebasetsAuth/firebaseTSAuth"
+import { FirebaseTSAuth } from "firebasets/firebasetsAuth/firebaseTSAuth";
+import { MatBottomSheetRef } from "@angular/material/bottom-sheet";
 
 @Component({
   selector: 'my-authenticator',
@@ -10,7 +11,7 @@ import { FirebaseTSAuth } from "firebasets/firebasetsAuth/firebaseTSAuth"
 export class AuthenticatorComponent implements OnInit {
   state = AuthenticatorCompState.LOGIN;
   FirebasetsAuth: FirebaseTSAuth;
-  constructor() {
+  constructor(private bottomSheetRef: MatBottomSheetRef) {
     this.FirebasetsAuth = new FirebaseTSAuth();
   }
 
@@ -21,7 +22,7 @@ export class AuthenticatorComponent implements OnInit {
       this.FirebasetsAuth.sendPasswordResetEmail({
         email: email,
         onComplete: (err) => {
-          alert("reset email to ${email}");
+          this.bottomSheetRef.dismiss();
         }
 
       })
@@ -46,7 +47,7 @@ export class AuthenticatorComponent implements OnInit {
           email: email,
           password: Password,
           onComplete: (uc) => {
-            alert("logged in")
+            this.bottomSheetRef.dismiss();
           },
           onFail: (err) => {
             alert(err)
@@ -71,7 +72,7 @@ export class AuthenticatorComponent implements OnInit {
         email: email,
         password: password,
         onComplete: (uc) => {
-          alert("account creato");
+          this.bottomSheetRef.dismiss();
           registerEmail.value = "",
             registerPassword.value = "",
             registerConfirmPassword.value = "";
