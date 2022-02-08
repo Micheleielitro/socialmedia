@@ -1,6 +1,8 @@
+<div class="bg-feed">
 <div id="post-feed">
   <app-post *ngFor="for let post of posts" [postData]="post"></app-post>
 </div>
 <button (click)="onCreatePostClick()" mat-fab color="warn" id="post-button">
   <mat-icon>add</mat-icon>
 </button>
+</div>

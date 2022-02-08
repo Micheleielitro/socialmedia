@@ -71,14 +71,6 @@ export class CreatePostComponent implements OnInit {
     })
   }
 
-
-
-
-
-
-
-
-
   onPhotoSelected(photoSelector: HTMLInputElement) {
     this.selectedImageFile = photoSelector.files![0];
     if (!this.selectedImageFile) return

@@ -9,3 +9,7 @@
   margin-left:auto;
   margin-right: auto;
 }
+.bg-feed{
+  background-image: url('../../../assets/SocialMediaAppFiles/sample_image_3.jpg');
+  background-attachment: fixed;
+}

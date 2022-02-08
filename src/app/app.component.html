@@ -1,5 +1,6 @@
-<div id="nav-bar">
-  <div id="nav-bar-content">
+
+ <div id="nav-bar">
+   <div id="nav-bar-content">
     <div id="nav-bar-left">
       <div class="nav-bar-items">Michejs</div>
     </div>
@@ -8,15 +9,15 @@
         Login
       </div>
       <div *ngIf="loggedIn() && userHasProfile" class="nav-bar-items">
-        Hello , {{ userDocument.publicName }}
+        Hello , {{ getUsername()}}
       </div>
       <div *ngIf="loggedIn()" (click)="onLogoutClick()" class="nav-bar-items">
         Log out
       </div>
     </div>
   </div>
-</div>
+ </div>
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet> <!--indirizza-->
 
 <app-profile [show]="loggedIn() && !userHasProfile"> </app-profile>
